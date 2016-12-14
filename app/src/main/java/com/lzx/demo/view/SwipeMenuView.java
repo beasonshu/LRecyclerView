@@ -236,7 +236,7 @@ public class SwipeMenuView extends ViewGroup {
 
                     //如果down，view和cacheview不一样，则立马让它还原。且把它置为null
                     if (mViewCache != null) {
-                        if (mViewCache != this) {
+                        if (mViewCache !=null) {
                             mViewCache.smoothClose();
                             mViewCache = null;
                             iosInterceptFlag = isIos;//add by 2016 09 11 ，IOS模式开启的话，且当前有侧滑菜单的View，且不是自己的，就该拦截事件咯。
@@ -329,6 +329,16 @@ public class SwipeMenuView extends ViewGroup {
                     break;
                 default:
                     break;
+            }
+        }else {
+            if (mViewCache != null) {
+                if (mViewCache != this) {
+                    mViewCache.smoothClose();
+                    mViewCache = null;
+                    iosInterceptFlag = isIos;//add by 2016 09 11 ，IOS模式开启的话，且当前有侧滑菜单的View，且不是自己的，就该拦截事件咯。
+                }
+                //只要有一个侧滑菜单处于打开状态， 就不给外层布局上下滑动了
+                getParent().requestDisallowInterceptTouchEvent(true);
             }
         }
         return super.dispatchTouchEvent(ev);

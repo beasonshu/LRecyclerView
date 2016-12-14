@@ -37,7 +37,12 @@ public class SwipeMenuAdapter extends ListBaseAdapter<ItemModel> {
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         SwipeViewHolder viewHolder = (SwipeViewHolder) holder;
         //这句话关掉IOS阻塞式交互效果 并依次打开左滑右滑
-        ((SwipeMenuView) viewHolder.itemView).setIos(false).setLeftSwipe(position % 2 == 0 ? true : false);
+        if (position > 0 ){
+            ((SwipeMenuView) viewHolder.itemView).setIos(true).setLeftSwipe(true);
+            ((SwipeMenuView) viewHolder.itemView).setIos(true).setSwipeEnable(true);
+        }else {
+            ((SwipeMenuView) viewHolder.itemView).setIos(true).setSwipeEnable(false);
+        }
 
         viewHolder.title.setText(getDataList().get(position).title + (position % 2 == 0 ? "我只能右滑动" : "我只能左滑动"));
 
